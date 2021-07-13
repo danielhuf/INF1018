@@ -1,0 +1,254 @@
+/* Daniel Stulberg Huf 1920468 3WB */
+/* João Pedro Khair Cunha 1910626 3WB */
+/*http://www4.inf.puc-rio.br/~inf1018/2021.1/trabs/t1/trab1-20211.html*/
+
+CASOS DE TESTE
+
+--------------------------------------------------------------------------------------------------------------------
+
+1) Caso simples, struct com somente campos do tipo char, escolhendo a ordenação little-endian.
+
+-> Arquivo teste.c, com a main, para testar o programa:
+
+#include <stdio.h>
+#include "grava_structs.h"
+
+struct s {
+	char c1;
+        char c2;
+        char c3;   
+};
+
+int main()
+{
+    struct s exemplo[3] = {{0x01, 0x02, 0x03}, {0xab, 0x23, 0xf5}, {0xff, 0x9a, 0x45}};
+    int res = grava_structs(3, exemplo, "ccc", 'L', "saida1");
+    dump_structs ("saida1");
+    return 0;
+}
+
+-> Resultado exibido no terminal:
+
+L
+3
+*
+01
+02
+03
+*
+ab
+23
+f5
+*
+ff
+9a
+45
+*
+---------------------------------------------------------------------------------------------------------------------
+
+2) Caso mais elaborado, struct com campos diferentes (short, int e long), sem bytes relativos a padding, escolhendo a 
+ordenação big-endian. 
+
+-> Arquivo teste.c, com a main, para testar o programa:
+
+#include <stdio.h>
+#include "grava_structs.h"
+
+struct s {
+	short s1;
+        short s2;
+        int i1;   
+        long l1;
+};
+
+int main()
+{
+    struct s exemplo[5] = {{0x0102, 0x0304, 0x35def3bb, 0xa5a67900a5a67900}, {0x0102, 0x0102, 0x01020304, 0x0102030405060708}, {0x471f, 0x120a, 0x37a9bbf1, 0xa5a67900a5a67900}, {0x0102, 0x0000, 0xf1f2f3f4, 0xa5a67900a5a67900}, {0xabcd, 0x0304, 0x35def3bb, 0x437388844370ff02}};
+    int res = grava_structs(5, exemplo, "ssil", 'B', "saida1");
+    dump_structs ("saida1");
+    return 0;
+}
+
+-> Resultado exibido no terminal:
+
+B
+5
+*
+01 02
+03 04
+35 de f3 bb
+a5 a6 79 00 a5 a6 79 00
+*
+01 02
+01 02
+01 02 03 04
+01 02 03 04 05 06 07 08
+*
+47 1f
+12 0a
+37 a9 bb f1
+a5 a6 79 00 a5 a6 79 00
+*
+01 02
+00 00
+f1 f2 f3 f4
+a5 a6 79 00 a5 a6 79 00
+*
+ab cd
+03 04
+35 de f3 bb
+43 73 88 84 43 70 ff 02
+*
+
+---------------------------------------------------------------------------------------------------------------------
+
+3) Caso similar ao anterior, com os mesmos campos e mesmos valores, porém armazenados em outra ordem para que haja bytes 
+relativos a padding na estrutura da struct (que não serão gravados no arquivo binário), e agora na ordenação little-endian.
+
+
+-> Arquivo teste.c, com a main, para testar o programa:
+
+#include <stdio.h>
+#include "grava_structs.h"
+
+struct s {
+        long l1;
+	short s1;
+        int i1;
+        short s2;  
+};
+
+int main()
+{
+    struct s exemplo[5] = {{0xa5a67900a5a67900, 0x0102, 0x35def3bb , 0x0304}, {0x0102030405060708, 0x0102, 0x01020304, 0x0102}, {0xa5a67900a5a67900, 0x471f, 0x37a9bbf1, 0x120a}, {0xa5a67900a5a67900, 0x0102, 0xf1f2f3f4, 0x0000}, {0x437388844370ff02, 0xabcd, 0x35def3bb, 0x0304}};
+    int res = grava_structs(5, exemplo, "lsis", 'L', "saida1");
+    dump_structs ("saida1");
+    return 0;
+}
+
+
+-> Resultado exibido no terminal:
+
+L
+5
+*
+00 79 a6 a5 00 79 a6 a5
+02 01
+bb f3 de 35
+04 03
+*
+08 07 06 05 04 03 02 01
+02 01
+04 03 02 01
+02 01
+*
+00 79 a6 a5 00 79 a6 a5
+1f 47
+f1 bb a9 37
+0a 12
+*
+00 79 a6 a5 00 79 a6 a5
+02 01
+f4 f3 f2 f1
+00 00
+*
+02 ff 70 43 84 88 73 43
+cd ab
+bb f3 de 35
+04 03
+*
+
+---------------------------------------------------------------------------------------------------------------------
+
+4) Último caso, exemplo do enunciado.
+
+-> Arquivo teste.c, com a main, para testar o programa:
+
+#include <stdio.h>
+#include "grava_structs.h"
+
+struct s {
+    int i1;
+    long l1;
+    short s1;
+    char c1;
+    short s2;
+  };
+
+int main()
+{
+    struct s exemplo[10] = {{0x01020304, 0x0102030405060708, 0x0102, 0x01, 0x0102}, {0x0a0b0c0d, 0x0a0b0c0d0e0f0001, 0x0a0b, 0x0a, 0x0a0b}, {0x01020304, 0x0102030405060708, 0x0102, 0x01, 0x0102}, {0x0a0b0c0d, 0x0a0b0c0d0e0f0001, 0x0a0b, 0x0a, 0x0a0b}, {0x01020304, 0x0102030405060708, 0x0102, 0x01, 0x0102}, {0x0a0b0c0d, 0x0a0b0c0d0e0f0001, 0x0a0b, 0x0a, 0x0a0b}, {0x01020304, 0x0102030405060708, 0x0102, 0x01, 0x0102}, {0x0a0b0c0d, 0x0a0b0c0d0e0f0001, 0x0a0b, 0x0a, 0x0a0b}, {0x01020304, 0x0102030405060708, 0x0102, 0x01, 0x0102}, {0x0a0b0c0d, 0x0a0b0c0d0e0f0001, 0x0a0b, 0x0a, 0x0a0b}};
+    int res = grava_structs(10, exemplo, "ilscs", 'L', "saida1");
+    dump_structs ("saida1");
+    return 0;
+}
+
+-> Resultado exibido no terminal:
+
+L
+10
+*
+04 03 02 01
+08 07 06 05 04 03 02 01
+02 01
+01
+02 01
+*
+0d 0c 0b 0a
+01 00 0f 0e 0d 0c 0b 0a
+0b 0a
+0a
+0b 0a
+*
+04 03 02 01
+08 07 06 05 04 03 02 01
+02 01
+01
+02 01
+*
+0d 0c 0b 0a
+01 00 0f 0e 0d 0c 0b 0a
+0b 0a
+0a
+0b 0a
+*
+04 03 02 01
+08 07 06 05 04 03 02 01
+02 01
+01
+02 01
+*
+0d 0c 0b 0a
+01 00 0f 0e 0d 0c 0b 0a
+0b 0a
+0a
+0b 0a
+*
+04 03 02 01
+08 07 06 05 04 03 02 01
+02 01
+01
+02 01
+*
+0d 0c 0b 0a
+01 00 0f 0e 0d 0c 0b 0a
+0b 0a
+0a
+0b 0a
+*
+04 03 02 01
+08 07 06 05 04 03 02 01
+02 01
+01
+02 01
+*
+0d 0c 0b 0a
+01 00 0f 0e 0d 0c 0b 0a
+0b 0a
+0a
+0b 0a
+*
+
+---------------------------------------------------------------------------------------------------------------------
+
+Como pôde ser vizualizado, em todos esses casos de teste, os resultados exibidos estão de acordo com o esperado.

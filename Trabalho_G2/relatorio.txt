@@ -1,0 +1,93 @@
+/* Daniel Stulberg Huf 1920468 Turma 3WB */
+/* João Pedro Khair Cunha 1910626 Turma 3WB */
+/* http://www4.inf.puc-rio.br/~inf1018//2021.1/trabs/t2/trab2.html */
+
+A seguir, estão presentes alguns casos de teste de funções 'Simples' diferentes, que foram traduzidas e depois executadas.
+Iremos apresentar as mesmas funções que foram dadas como exemplo no enunciado do trabalho.
+
+===================================================================================================================
+
+CASO 1) f(x) = x + 1
+
+-> Parâmetro p1 definido na main: 40
+
+-> Texto do arquivo "simples.txt":
+v1 < p1
+v1 = v1 + $1
+ret v1
+
+-> Saída exibida no terminal:
+1 v1 < p1
+2 v1 = v1 + $1
+3 ret v1
+retorno -> 41
+
+===================================================================================================================
+
+CASO 3) f(x,y) = (x+y)*(x-y)
+
+-> Parâmetros p1 e p2 definidos na main: -5 e 10
+
+-> Texto do arquivo "simples.txt":
+v1 < p1
+v2 < p2
+v3 = v1 + v2
+v4 = v1 - v2
+v1 = v3 * v4
+ret v1
+
+-> Saída exibida no terminal:
+1 v1 < p1
+2 v2 < p2
+3 v3 = v1 + v2
+4 v4 = v1 - v2
+5 v1 = v3 * v4
+6 ret v1
+retorno -> -75
+
+===================================================================================================================
+
+EXEMPLOS DE TRATAMENTO DE ERRO
+
+CASO 1)
+-> Texto do arquivo "simples.txt":
+v1 < p1
+v2 < p2
+v3 < $1
+v4 < $2
+v5 < v4
+v6 < v5
+ret v6
+
+-> Saída exibida no terminal:
+1 v1 < p1
+2 v2 < p2
+3 v3 < $1
+4 v4 < $2
+5 v5 < v4
+erro numero de variaveis locais excedido na linha 6
+
+===================================================================================================================
+
+CASO 2)
+-> Texto do arquivo "simples.txt":
+v1 < $2
+v2 = v1 + p1
+ret v2
+
+-> Saída exibida no terminal:
+1 v1 < $2
+erro operacao invalida na linha 2
+
+===================================================================================================================
+
+CASO 3)
+-> Texto do arquivo "simples.txt":
+v1 < $2
+v2 = v1 / $1
+ret v2
+
+-> Saída exibida no terminal:
+1 v1 < $2
+erro simbolo invalido na linha 2
+
