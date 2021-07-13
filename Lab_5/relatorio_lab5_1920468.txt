@@ -1,0 +1,54 @@
+RELATÓRIO LABORATÓRIO 5 - Daniel Stulberg Huf (1920468)
+
+1) O array b deve ocupar 8 bytes na memória, pois é o tamanho de um inteiro (4 bytes) multiplicado pelo número de 
+elementos do array (2). Já o array c pode ser entendido como um array de arrays, e para cada a[i] do array haverá 
+um array de 3 elementos. Sendo assim, em a[2][3] teremos 6 elementos, que multiplicado por 2 (tamanho do tipo short) 
+resultará em 12 bytes ocupados na memória.  Em ambos os casos a alocação de memória é contígua. O endereço do array 
+irá apontar para seu primeiro elemento, e o endereço do próximo elemento corresponderá ao endereço anterior + o tamanho
+que o tipo do array ocupa na memória. 
+
+Ao testar a função dump na main, vi que os tamanhos de cada array são de fato o que havia sido indicado, e o endereço 
+do primeiro elemento corresponde ao endereço do array. Conforme os endereços vão sendo acrescidos de sizeof(tipo), 
+atingimos um novo elemento do array, que é mostrado conforme a ordenação little endian. 
+
+2) Chamando a função dump para essa estrutura, vemos, através das sequências de endereços, que os campos de cada elemento 
+da struct são alocados sequencialmente na memória (sendo cada um deles ordenado segundo a ordenação little endian). Como
+esperado, para as variáveis inteiras a e c são reservados 4 bytes na memória, porém para a variável short b também são 
+reservados 4 bytes, em vez de 2 bytes como de costume (há um padding de 2 bytes). Isso mostra que a alocação de memória 
+da struct é sequencial, mas não necessariamente contígua, pelo fato de que os valores devem ser inicializados em endereços 
+múltiplos de seus respectivos tamanhos, garantindo o alinhamento da struct. 
+
+3) Em todos os casos de struct, seus campos são alocados sequencialmente na memória, mas nem sempre são contíguos, variando
+caso a caso. Considere padding como x.
+
+a) Tamanho: 12 bytes
+   Organização: |c1|x|x|x|i|i|i|i|c2|x|x|x|
+
+b) Tamanho: 16 bytes
+   Organização: |l|l|l|l|l|l|l|l|c|x|x|x|x|x|x|x|
+
+c) Tamanho: 8 bytes
+   Organização: |i|i|i|i|c1|c2|x|x|
+
+d) Tamanho: 24 bytes
+   Organização: |l|l|l|l|l|l|l|l|c1|x|x|x|x|x|x|x|c2|x|x|x|x|x|x|x|
+
+e) Tamanho: 3 bytes
+   Organização: |c1|c2|c3|
+
+f) Tamanho: 16 bytes
+   Organização: |s1|s1|x|x|i|i|i|i|c1|c2|c3|x|s2|s2|x|x|
+
+Para o caso das unions, diferentes tipos de dados são guardados no mesmo local de memória, e só um elemento da union
+pode conter um valor em determinado momento. Assim, menos memória é ocupada, e seu tamanho corresponde ao tamanho 
+ocupado pelo "maior" elemento, já que deve-se presevar os endereços múltiplos do tamanho do elemento armazenado nele. 
+Considere ? como um valor que estava previamente armazenado no endereço selecionado antes da atribuição do valor de 
+um tipo da union. 
+
+g) Tamanho: 8 bytes
+   Organização: inteiro-> |i|i|i|i|?|x|x|x|
+                char-> |c|c|c|c|c|x|x|x|
+
+h) Tamanho: 6 bytes
+   Organização: short-> |s|s|?|?|?|x|
+                char-> |c|c|c|c|c|x|

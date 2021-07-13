@@ -1,0 +1,26 @@
+RELATÓRIO LABORATÓRIO 3 - Daniel Stulberg Huf (1920468)
+
+1) Para o valor de 32 bits com o byte menos significativo igual ao byte correspondente de x e 
+   todos os outros bits iguais a 0, realizei uma operação de conjunção bit a bit entre x e 0x000000FF, 
+   já que 0 & "alguma coisa" vai resultar em 0, e F & "alguma coisa" vai resultar em "alguma coisa".
+
+   Para o valor de 32 bits com o byte mais significativo com todos os bits iguais a '1' e os outros bytes 
+   com o mesmo valor dos bytes correspondentes de x, realizei uma operação de conjunção bit a bit entre x
+   e 0xFF000000, já que F|"alguma coisa" vai resultar em F (todos os bits de F são '1') e 0|"alguma coisa"
+   vai resultar em "alguma coisa". 
+
+2) Inicializei a variável c em 0 (antes da operação, há 0 '1´s'). O for vai iterar sobre os bits do inteiro 
+   sem sinal, começando do bit menos signifativo, e os bits vão "andando" para a direita (através do x=x>>1),
+   até que a representação em binário esteja completamente zerada. A cada iteração, será a realizada a operação
+   de conjunção com 1, pois somente se o bit for 1, a operação retornará 1. Caso isso aconteça, a variável c
+   operará com o número 1 através do "ou exclusivo", alternando assim o c de 0 para 1, 1 para 0, 0 para 1... etc 
+
+3)
+a. O que eu fiz foi criar outros dois valores y e z, onde y pega os 4 ultimos bits do byte, os coloca à esquerda
+   e completa a direita com 4 zeros, e z pega os primeiros 4 bits do byte,, os coloca à direita e completa a 
+   esquerda com 4 zeros. Fazendo y|z, temos que 0|"alguma coisa" resulta em "alguma coisa", e assim as metades
+   do byte do valor x original são invertidas.
+
+b. O pensamento é similar ao da letra a, mas dessa vez y desloca n bits à esquerda, deixando (8-n) bits 0´s à direita,
+   e o z desloca (8-n) bits de x para a direita, deixando n bits 0´s à esquerda. A disjunção y|z retornará o valor
+   de x deslocado n bits à esquerda, com os bits removidos no deslocamento colocados à esquerda. 

@@ -1,0 +1,50 @@
+RELATÓRIO LABORATÓRIO 4 - Daniel Stulberg Huf (1920468)
+
+1) Resumidamente, a função dump irá printar o valor de uma variável de um tipo arbitrário, recebida por parâmetro 
+em sua representação decimal, na sua correspondência na base hexadecimal. No primeiro caso, o caracter c de valor
+decimal 150, ocupando 1 byte na memória, é representado em binário por 10010110 (1*2^7 + 1*2^4 + 1*2^2 + 1*2^1),
+o que equivale a 96 em hexadecimal (9*16 + 6). Segundo caso, short int s de valor decimal -3, ocupando 2 bytes
+na memória, por complemento a dois, equivale em binário a 1111 1111 1111 1101 (sinal negativo 1 à esquerda, 
+3-1 = 2, 2 equivale a 0000 0000 0000 0010, e depois invertido). Tal binário equivale a FFFD. Terceiro caso, 
+inteiro i de valor decimal -151, ocupando 4 bytes na memória, por complemento a dois, equivale em binário a 
+1111 1111 1111 1111 1111 0110 1001 (sinal negativo 1 à esquerda, 151-1=150, 150 equivale a 1001 0110, e depois 
+invertido, completando os 1`s à esquerda). Tal binário equivale a FFFFFF69. De fato, tais valores em hexadecimal
+foram printados. 
+
+2) A função utilizada foi a mesma que a da questão 1. Primeiro, na main é printado o valor em decimal da
+variável l de tipo short, que é -32765, e da variável k do tipo unsigned short, ambas ocupam um espaço na 
+memória de 2 bytes. A função dump irá printar esses valores em suas representações hexadecimais. No primeiro caso,
+-32765, por complemento a dois, equivale em binário a 1000 0000 0000 0011 (sinal negativo 1 à esquerda,
+32765-1=32764, 32764 equivale a 1111 1111 1111 1100, e depois é invertido, conservando o 1 mais significativo). 
+Tal binário equivale a 8003 em hexadecimal. Segundo caso, 32771 equivale a 1000 0000 0000 0011, que equivale a 
+8003 em hexadecimal. Nota-se que os valores em decimal -32765 e 32771 possuem a mesma representação em hexadecimal.
+De fato, tais valores em hexadecimal foram printados.   
+
+3) O que a minha função xbyte faz é simplesmente pegar o valor hexadecimal, que foi convertido em decimal através
+da função string2num, e, dependendo do byte desejado, faço um shift para esquerda determinado número de vezes
+(quando é o byte 2 eu desloco 8 bits por exemplo) e depois dou um shift para o byte ficar mais à direita possível. 
+Esse resultado acaba gerando um inteiro correspondente ao byte indicado. 
+ 
+
+4) No programa 1, ambas as variáveis x e y são do tipo inteiro com sinal. No caso de x, seu valor
+convertido para binário é 1111 1111 1111 1111 1111 1111 1111 1111, e pelo processo de complemento a 2, seu valor em
+decimal é -1 (0+1 = 1, mantendo-se o 1 mais significativo). O valor de y já é dado em decimal. De fato, -1 é menor
+do que 2. 
+
+No programa 2, ambas as variáveis x e y são do tipo inteiro sem sinal. Embora que no print vejamos os valores de 
+x e y como -1 e 2, deve-se entender que esses valores foram printados na forma de inteiros com sinal. Deve-se
+atentar para a representação interna de x e y, onde x equivale ao decimal 4294967295 (não há sinal, e podemos
+vizualizar esse valor quando printamos x no formato %u) e y equivale ao decimal 2. De fato, x não é menor do que y. 
+
+No programa 3, x é declarada como variável do tipo inteiro com sinal. Pelo mesmo processo de complemento a 2
+descrito no programa 1, seu valor em decimal equivale a -1. y é declarada como variável do tipo inteiro sem 
+sinal, e seu valor em decimal equivale a 2 (podemos vizualizar o valor 2 quando printamos tanto no formato
+%d quanto no formato %u). Nesse caso em especial devemos atentar para a representação interna de x e y em vez de 
+focar em seus tipos, pois x representa o binário 1111 1111 1111 1111 1111 1111 1111 1111 e y representa o binário 
+0000 0000 0000 0000 0000 0000 0000 0010. De fato, x não é menor do que y. 
+
+5) No caso, o código gerado fará com que ui capture sc, ou seja, sua representção interna em binário, e complete
+à esquerda os 24 bits que faltam para o tipo unsigned int (32-8=24). O valor em decimal de sc equivale a -1.
+Pela técnica de complemento a dois, fazemos 1-1=0, que equivale a 0000 0000 em binário, e invertendo tem-se
+1111 1111. Chamando a função dump, vemos que o que a conversão para unsigned int faz é completar os bits à esquerda
+com 1´s, e isso vale não só para -1, mas também para outros valores negativos do mesmo tipo. 

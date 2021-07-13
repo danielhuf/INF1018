@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+int main()
+{
+    unsigned char a;
+    signed char b;
+    
+    b = -5;
+    a = b;
+    printf("a = %d, b = %d\n", a, b);
+    
+    a = a>>1;
+    b = b>>1;
+    printf("a = %d, b = %d\n", a, b);
+
+    return 0;
+}
+
+/* Temos que B vale 11111011. A pegará esse valor, mas não haverá sinal, logo 11111011 valerá 251.
+   A>>1 valerá 01111101, que é 125. O B desloca os bits, mas mantem o sinal 1 na esquerda, logo
+   será 11111101, que é igual a -3.  */
+   
+/* Se tivessemos um B positivo, nada mudaria.  */

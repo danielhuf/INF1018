@@ -1,0 +1,34 @@
+RELATÓRIO LABORATÓRIO 2 - Daniel Stulberg Huf (1920468)
+
+1)
+a. O tamanho do inteiro é 4 bytes, já que o programa imprimiu 4 linhas de acordo com o valor de n.
+Os bytes estão armazenados na memória de acordo com a ordenação little endian, já que o valor do inteiro
+em hexadecimal está ordenado do byte menos para o mais significativo.
+
+b. O valor em hexadecimal do long int 10000 foi o mesmo, mas dessa vez foi armazenado em 8 bytes na memória.
+
+c. O valor em hexadecimal do short int 10000 foi o mesmo, mas dessa vez foi armazenado em 2 bytes na memória.
+
+d. O valor em hexadecimal da variável de tipo char é o mesmo em sua representação como caractere e como código
+da tabela ASCII. Em ambos os casos, vê-se que o tamanho ocupado na memória é de 1 byte. 
+
+e. Na função dump, mudando o formato do printf para %d, obtemos os códigos desses caracteres na tabela ASCII.
+Note que o operador sizeof retorna o valor de 2 para essas strings, já que cada string é formada por 1 caracter
+e terminada com o '/0'.
+
+2)
+a. Basicamente, a função string2num recebe uma string numérica e retorna a sua representação em forma de int. 
+A cada iteração do for, o inteiro a é multiplicado por 10 para "subir a casa decimal" (ir colocando o algarismo 
+mais à esquerda) e depois somar com (*s - '0'). O que (*s - '0') faz é pegar o primeiro char que s aponta e 
+subtraí-lo de '0'. Essa subtração é feita para converter um caracter numerico para seu equivalente em inteiro, 
+pois estaremos subtraindo seu valor na tabela ASCII com o valor de 0 na tabela ASCII. A função string2num 
+repete a iteração n vezes, n é o número de caracteres na cadeia, indo do caracter mais à esquerda para o mais à 
+direita.
+
+b. Para modificar a função, basta multiplicar a variável a pela base dada a cada iteração. 
+
+c. Para modificar a função, agora deve ser considerada a condição da base. Se ela estiver entre 2 e 10, o processo 
+ocorre normalmente. Caso for maior que 10, deve-se somar a variável a, que está multiplicada pela base,
+ao correspondente numérico da letra (a-z), que é obtido subtraindo o caracter da letra por 'a' e somando 10, 
+para obter o código correspondente ao que queremos na tabela ASCII, e assim a soma é realizada corretamente.
+Já que o maior "dígito" possível para uma determinada base é 35, temos que essa maior base é 36. 

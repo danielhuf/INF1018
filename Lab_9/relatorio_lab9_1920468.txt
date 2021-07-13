@@ -1,0 +1,27 @@
+RELATÓRIO LABORATÓRIO 9 - Daniel Stulberg Huf (1920468)
+
+1) Traduzidno a função add para assembly, primeiro criei iniciei a função construindo o registro de ativação, e finalizei
+a função destruindo-o. No corpo da função, movi edi (primeiro parâmetro da função) para eax e somei a eax os valores
+contidos nos registradores esi e edx (segundo e terceiro parametros das funções). Escolhi como destino o registrador eax
+porque ele já é o registrador que armazena o valor retornado pela função. 
+   Criando a main em C e compilando os dois arquivos juntos, o valor exibido é 6.
+
+2) Traduzindo a função fat para assembly, primeiro criei o registro de ativação, salvando o RA da função chamadora e 
+e criando sua base. No início da função, comparo edi (primeiro parâmetro passado) a 0. Caso sejam iguais, movo 1
+para eax (registrador com o valor de retorno da função) e pulo para o label FIM, onde há apenas a finalização da função
+com a destruição do registro de ativação. Caso contrário, pulo para o label ELSE. Em tal label, eu primeiro salvo
+o valor contido em edi (parâmetro n) o endereço do RA - 4. Depois, diminuo o valor de edi em 1 (transformando o parâmetro
+para n-1) e chamo a função fat. Dessa maneira, agora o registrador eax conterá o valor retornado por fat(n-1). Depois,
+restauro o valor contido em edi (edi volta a armazenar n) e multiplico eax por tal valor. Agora, eax contem o valor
+correto a ser retornado pela função recursiva fat, e assim eu sigo para a finalização da função. 
+
+3) Traduzindo a função foo para assembly,, iniciei criando o registro de ativação, salvando na pilha o BP da função 
+chamadora. Depois, inicializei as variáveis s e i, equivalentes aos registradores ebx e ecx, com o valor 0. Passando 
+para o for, comparo o valor de ecx a esi (segundo parâmetro da função chamada). Se ecx for maior ou igual a ecx, já pulo
+para o label FIM, onde a função é finalizada. Caso contrário, inicio o processo para somar a[i] a s. Paera isso,
+coloco em edx o valor 4, mulitplico edx por ecx (i) e estendo edx para 64 bits, movendo-o para rdx. Depois, copio rdi
+(primeiro parâmetro da função é a[]) para r12 e somo r12 com rdx, obtendo o equivalente a a[i]. Depois faço o código que
+equivale ao if, comparo o conteúdo armazenado por r12 (a[i]) a 0. Caso sejam diferentes, pulo para o label FIM_FOR, onde
+ecx é acrescido de 1 e retorna para o início do for. Caso contrário, faço a[i] receber s, isto é, movo ebx para (%r12), e 
+depois movo 0 para ebx. Depois disso, automaticamente passo para o label FIM_FOR. 
+   Compilando foo.s e ex3.c, vejo que o resultado é exibido da maneira que eu esperava. 

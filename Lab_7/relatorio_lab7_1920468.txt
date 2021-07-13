@@ -1,0 +1,29 @@
+RELATÓRIO LABORATÓRIO 7 - Daniel Stulberg Huf (1920468)
+
+1) O que o programa em C faz é ir printando cada valor do array de char no formato %c, ou seja, estaremos vizualizando o 
+valor dos números ao equivalente na tabela ascii. Passando esse programa para assembly, primeiro definimos os dados globais,
+no caso o array de valores do tipo byte e duas strings de formato para printf (uma para printar um valor do array e outra
+para printar o \n). Depois do prólogo (caixa preta), move-se o array (o que ele aponta, na realidade) para o registrador
+%r12. O label L1 funciona como uma estrutura equivalente ao for, ele vê se o conteúdo de %r12 é igual a zero. Em caso positivo,
+o código pula para L2, onde a função que printa \n é chamada, seguida do código de finalização (caixa preta). Em caso negativo,
+o programa continua, o byte é estendido para 32 bits, o conteúdo de %r12 é passado para %eax, é chamada a função que 
+printa o valor apontado por %r12, também armazenado em %eax, e em seguida é adiconado +1 a %r12 (passamos para o endereço seguinte)
+e finalmente o código volta para L1, para que o for se repita (ou não). 
+
+2) Para alterar o programa em assembly, depois de ter passado o conteúdo de %r12 para %eax (estendendo o byte para 32 bits),
+comparei %eax ao valor 123 (equivalente a '{' na tabela ascii). Em caso positivo, pulei para o label PULA_PRINT, que 
+adiciona mais 1 em %r12 e volta para o início do for (pula para L1). Em caso negativo, fiz o mesmo processo comparando eax
+a 125 ('}' na tabela ascii), que em caso positivo também vai para PULA_PRINT. Em caso negativo em ambos os casos, o valor de 
+eax é printado e prossegue naturalmente para PULA_PRINT. 
+
+3) Para o programa em assembly, inicializei o registrador %ebx com o valor 1. Em seguida, no label L1 eu primeiro comparo
+%ebx ao valor 11. Caso sejam iguais, pulo para L2, onde o código é finalizado. Caso contrário, passo o valor de ebx para 
+um ecx auxiliar. Depois multiplico ecx por ele mesmo e passo seu valor para eax, que será impresso. Em seguida, somo mais 1
+a ebx e volto para L1 (início do for). 
+
+4) Traduzindo o programa em assembly, inicializei ebx ("i") e ecx ("soma") em 0, e tambem r12 para servir de ponteiro
+para o array de inteiros. Em seguida, no label L1 ebx é comparado a 4. Se for igual, o código pula para L2, onde eax
+recebe ecx (valor da soma), é impresso e depois o código é finalizado. Caso contrário, inicializei um r13 auxiliar (que
+servirá de end(a[i])), inicializei edx com o valor 4, multipliquei edx pelo valor de ebx, estendi edx para 64 bits e 
+somei seu valor com o r13, que agora é o novo endereço atualizado na posição certa. Somei ecx ao conteúdo armazenado
+por r13 (soma += vet[i]), somei 1 a ebx (i++) e retornei para L1 (início do for). 

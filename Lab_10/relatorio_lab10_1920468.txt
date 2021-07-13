@@ -1,0 +1,39 @@
+RELATÓRIO LABORATÓRIO 10 - Daniel Stulberg Huf (1920468)
+
+1) Traduzindo a função add para assembly, primeiro iniciei construindo o registro de ativação. Salvei na pilha o base pointer
+da função chamadora e criei a base do RA. Coloquei o valor 0 no registrador esi (análogo a int a=0) e passo para o label 
+DENTRO_DO_FOR, onde primeiramente comparo o valor armazenado em rdi (primeiro parâmetro passado pela função) a 0, isso
+seria análogo a comparar o que a struct x aponta com NULL. Caso seja igual a 0, pulo para o label FORA_DO_FOR, destruo 
+o registro de ativação e finalizo a função. Caso contrário, somo ao esi o conteúdo armazenado em rdi, ou seja, um campo da
+struct que seja um inteiro. Depois disso, para fazer o equivalente a x = x->next, movo para rdi o conteúdo armazenado 
+em 8 endereços após o que aponta rdi no momento, isso fará com que rdi vá para o "next", de acordo com a própria estrutura
+interna de armazenamento da struct em questão. Depois disso pulo para o abel DENTRO_DO_FOR e o processo se repete (ou não).
+   Compilando o arquivo e da função e a main juntos, de fato o resultado exibido foi o esperado.
+
+2)  Traduzindo a função para assembly, primeiro salvei na pilha o BP da função chamadora e coloquei a pilha novamente no
+múltiplo de 16. Depois, criei a base do RA, abri espaço no RA e salvei o valor de ebx da função chamadora no RA. Para fazer o if,
+comparei rdi com zero. Caso não iguais, pulo para o label ESLE, onde faço ebx receber o conteúdo de rdi (x->val), faço 
+rdi apontar para 8 endereços na frente (x = x->next), chamo add2 recursivamente e somo a eax (valor de retorno da função)
+o valor de ebx (x->val). Depois vou para o label FIM, onde restauro o ebx da função chamadora que estava no RA e finalizo 
+a função. Caso contrário, faço eax receber zero e pulo direto para o fim.
+
+3)  Traduzindo a função para assembly, primeiro salvei na pilha o BP da função chamadora e coloquei a pilha novamente no
+múltiplo de 16. Depois, criei a base do RA e abri espaço no RA. Entrando no while, comparo o valor de esi (2 parametro
+da função chamadora) a 0. Caso sejam iguais, pulo para o label FIM, onde a funão é finalizada. Caso contrário, 
+salvo os registradores referentes aos parâmetros das funções no RA. Depois, movo edx (val) para esi, já que val será
+o segundo parametro da função a ser chamada a seguir (o primeiro parametro é o mesmo), e depois chamo a função f. 
+Depois disso, restauro os parâmetros originais do RA e faço 4(%rdi), que equivale a px->val2, receber eax (valor de retorno
+da última função). Antes de voltar ao início do WHILE, somo 8 a rdi para passar para a próxima struct do array e decremento
+1 de esi (n). 
+
+4) Traduzindo a função para assembly, primeiro salvei na pilha o BP da função chamadora e coloquei a pilha novamente no
+múltiplo de 16. Depois, criei a base do RA e abri espaço no RA. Também salvei rbx (callee saved) da função chamadora no RA.
+Inicialmente, movi 0 para ebx, que funcionará como o i. Comparei ebx a edx (parametro n) e caso ebx seja maior ou  igual,
+pulo para o label FIM, onde restauro o rbx da função chamadora e finalizo a função. Caso contrário, faço o registrador
+r10 receber o endereço de outro[i]. Para isso, estendo ebx para 64 bits e passo seu valo para r10, multiplico-o por 4 e 
+somo nele rsi (que guarda o endereço de outro[]). Faço o mesmo processo para o registrador r11 receber o endereço de um[i],
+mas agora somando ao final rdi em vez de rsi, pois estou querendo somar o primeiro argumento da função chamadora. Depois disso,
+salvo os registradores que guardam os parâmetros das funções no RA, preparo edi (primeiro parametro da função) para 
+receber o conteúdo armazenado em r11 (*(um+1)) e chamo a função f. Depois disso, resstauro os parâmetros originais da primeira
+função e faço o conteúdo armazenado por r10 (*(outro+i)) receber eax (retorno de f). Para finalizar o for, incremento ebx
+e pulo para o label FOR, onde o processo de repete (ou não). 

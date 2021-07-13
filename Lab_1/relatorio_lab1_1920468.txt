@@ -1,0 +1,22 @@
+RELATÓRIO LABORATÓRIO 1 - Daniel Stulberg Huf (1920468)
+
+4a. Como foi digitado ./ex1 4.0, argc foi igual a 2 e o if não foi executado. A variável f de tipo double recebeu
+o valor 4.00 e o retorno da função foo foi 5.00 (4.00 + 1). O programa ex1 não foi encontrado porque ele não está 
+no caminho dos executáveis do computador, ou seja, seu diretório não foi encontrado. 
+
+4b. Traduzindo os dois arquivos c em arquivos objeto, executando o ligador e testando o ex2, o resultado encontrado
+foi o mesmo que o do ex1.
+
+4c. Executando ex3, a main funciona corretamente, porém o valor retornado pela função foo, agora declarada
+implicitamente, foi 0.00.
+
+5. Os argumentos passados pela função dump são, respectivamente, endereço de uma variável de um tipo qualquer e 
+o tamanho em bytes dessa variável. A função irá printar o valor da variável p na memória, no caso armazenado 
+na variável p1 do tipo unsigned char. O print irá acontecer em um número n de vezes igual ao número de bytes 
+que a variável ocupa na memória. 
+
+Pode-se concluir que a quantidade de memória alocada para o numero 1 o caracter ´1´ são os mesmos (1 byte),
+mas seus valores diferem, pois o do primeiro é literalmente o número 1 e o do segundo é 49, o que equivale ao 
+código do caracter ´1´ na tabela ASCII. Viu-se que o valor do número inteiro 1 foi de 1000, isso porque 
+uma variável do tipo int ocupa 4 bytes na memória, com a ordenação do tipo little endian. O tamanho do vetor 
+com a cadeia "1" foi de 2 bytes, de valor 49 0, mais uma vez confirmando a ordenação little endian. 

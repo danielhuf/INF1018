@@ -1,0 +1,18 @@
+RELATÓRIO LABORATÓRIO 8 - Daniel Stulberg Huf (1920468)
+
+1) Para construir a main, bastou mover a string para o registrador rdi, que é o primeiro parâmetro da funcção, e deve
+ser de 64 bits pois armazena um ponteiro para o início da string. Depois disso, dei um call na system, que já faz parte
+da biblioteca padrão do c (stdlib). O resultado da chamada da função foi exibir no terminal o nome dos arquivos no diretório 
+corrente.
+
+2) Basicamente, o que a main faz é andar pelo array nums e, através da função filtro, ir printando 1 por 1 os elementos de
+nums, se o elemento em questão for maior ou igual do que um limite, ou 0, se for menor que esse limite. 
+   Traduzindo a função main para assembly, primeiramente armazenei o valor 0 em ebx (que funcionará como o i do for) e 
+guardei o ponteiro para nums no registrador r12. Em seguida no label INICIO_FOR, primeiro comparo ebx a 5. Se o valor
+armazenado em ebx for maior ou igual a 5, pulamos para o label FIM, que finaliza o código. Caso contrário, eu defino os 
+parâmetros a serem passados para a função filtro (criada em C), ou seja, armazeno em edi o conteúdo armazenado na memória
+do r12 (que aponta para o endereço de nums) e armazendo o valor 1 em esi (esi seria o limite), e depois chamo a função,
+que retorna seu valor armazenado no registrador eax. Assim, printa-se o valor de eax através da chamada da função printf. 
+Depois de exibir o valor, somo +4 a r12, já que r12 está funcionando como um ponteiro para um array de valores inteiros e 
+somo +1 a ebx (i++), pulando para o início do for e iterando (ou não) sobre o for. 
+   De fato, os programas em C e em assembly retornam os mesmos resultados. 

@@ -1,0 +1,23 @@
+RELATÓRIO LABORATÓRIO 6 - Daniel Stulberg Huf (1920468)
+
+1) Comparando o código em C com o código em assembly, noto que primeiro foram incializados os dados globais, no caso
+o vetor de inteiros e a string de formato para printf. Quanto ao código, primeiro foi definido o label referente à main, 
+com um prólogo que a princípio é uma caixa preta. O registrador ebx recebeu o valor 0 (equivalente a i=0), e o registrador
+r12 recebeu o endereço do vetor de inteiros (r12 funciona como um ponteiro para um inteiro). Em seguida, as labels L1 e 
+L2 fucnionam como uma estrutura de for; Em L1, caso ebx seja igual a 4, saímos do for e o código é finalizado. Caso contrário,
+a função printf é chamada (no momento é uma caixa preta), e depois ebx é acrescido de 1 (equivalente a i++), r12 é acrescido
+de 4, já que funciona como um ponteiro de inteiros (tamanho 4 bytes) e retorna para uma nova iteração do for através do jmp.
+
+2) Para modificar o programa, primeiro inicializei o registrador %ecx com o valor 0, %ecx terá como função representar a soma.
+Para cada iteração, somei a %ecx o conteúdo do valor de memória de %r12, e coloquei o printf para fora do label, movendo para 
+%eax o registrador %ecx. 
+
+3) Para modificar o programa, no label 1 antes de printar o valor, conferi se ele era impar através da operação lógica
+de conjunção com 0x00000001 (primeiro passei o conteudo de %r12 para %edx). Se fosse impar, pulei o código para o label L2
+que somava +1 a "i" e +4 ao endereço do "ponteiro". Se fosse par, antes de pular para L2 eu printei o valor, como solicitado
+pela questão, e depois pulei para L2 da mesma maneira. No fim de L2, o código volta para L1 para conferir a condição do for,
+e se ela não for satisfeita, o código pula para o label FIM, de finalização do código. 
+
+4) Para modificar o programa, além de ter trocado .int para .byte, troquei "movl (%r12), %eax" por "movsbl (%r12), %eax",
+para antes de mover o conteúdo de %r12, estender com sinal o número de bits de 8 para 32. Também troquei $4 por $1 no
+addq de %r12, já que agora r12 pode ser entendido como um ponteiro para char (1 byte) e não um ponteiro para int (4 bytes).
