@@ -1,0 +1,32 @@
+RELATÓRIO LABORATÓRIO 16 - Daniel Stulberg Huf (1920468)
+
+1) -
+
+2) Utilizando o programa nm, vizualizamos a GOT (Global Offset Table), que lista os símbolos do código objeto. 
+Quando lemos "U", significa que o símbolo não está definido (é o caso da variável "a" em temp2.c e printf em temp1.c). 
+Quando lemos "T", significa que o símbolo está em outra seção do código ("a" em temp1.c e foo em temp2.c). 
+Por fim, quando lemos "D", significa que o símbolo está inicializado na seção dos dados ("a" em temp1.c e "b" em temp2c).
+
+3) Aparece uma mensagem de erro no terminal, reportando conflito de tipos para a variável "a", que em temp1.c foi declarada
+como char, e em temp1.h foi declarada como int. O erro acontece na compilação ao tentar gerar o arquivo objeto. 
+Se comentarmos a linha que inclui a biblioteca temp1.h em temp1.c, o processo teria acontecido sem problemas.
+
+4) a. A execução exibiu o valor de 1277, porem não consegui entender o motivo pelo qual isso aconteceu. 
+
+   b. Ocorre um erro durante o processo de ligação dos módulos objeto, relatando que há um erro de múltiplas definições
+   da variável "a". Inspecionando os símbolos, vemos que o mesmo símbolo "a" está inicializado em ambas as seções
+   dos dados de temp1.c e temp2.c.
+
+   c. Nesse caso, os programas compilam e são ligados corretamente, e a execução exibe o valor de 1024. 
+   Isso acontece porque a variável "a" foi inicalizada em temp2.c como estática, e assim não haverá conflito
+   nas seções de dados entre os dois arquivos. Ao chamar foo, a variável "a" alterada será aquela referente a temp2.c.
+   Ao printar "a" em temp1.c, vizualizamos o valor armazenado variável "a" que foi inicializada em temp1.c
+
+5) a. A compilação do arquivo temp1.c gera um warning de declaração implícita da função b(). Depois de ligar os 
+   arquivos e ligar o programa, ocorre um segmentation fault na execução. Ao usarmos o comando nm, vemos que o símbolo 
+   "b" não está definido, e o executável dá segmentation fault porque a função b() não existe em nenhuma biblioteca
+   padrão do sistema. 
+
+   b. O mesmo erro acontece, já que temp2.c não exerce influência nenhuma sobre temp1.c com a retirada do include 
+   e da função foo. 
+    

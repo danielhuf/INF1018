@@ -1,0 +1,23 @@
+RELATÓRIO LABORATÓRIO 17 - Daniel Stulberg Huf (1920468)
+
+1) Temos que a organização dos campos da struct x se dá da seguinte forma: 
+   d d d d d d d d f f f f s s PP PP
+
+   Dessa maneira, o programa irá exibir os endereços dos campos da struct e seus respectivos valores em hexadecimal,
+   ordenados em little-endian. De fato, ao executar o programa, vemos o valor do double -4.5 em hexadecimal 
+   (C0 12 00 00 00 00 00 00) exibido em little-endian. Em seguida, o mesmo acontece para o valor hexadecimal do float
+   9.75 (41 1c 00 00) e para o short -11 (FF F5), seguido de mais 2 bytes de padding.
+
+2) A função foo foi traduzida para assembly e seu código está todo comentado. A execução funcionou como esperado.
+
+3) A função pack foi traduzida para assembly e seu código está todo comentado. A execução funcionou como esperado.
+
+4) A função pack1 foi traduzida para assembly e seu código está todo comentado. A compilação não apresentou erros, porém
+   a execução deu segmentation fault e eu não consegui encontrar o local do erro.
+
+5) Os símbolos B são: buff e k; os símbolos T são: g; os símbolos U são: f, i, malloc, strcat, strcpy e strlen.
+
+   Ao ligar os dois módulos e executar o executável, a variável k não é printada. Porém, printando a variável j eu encontro
+   o valor 9, já que j é o retorno de g, e g retorna o resultado de f. A função f(feita por mim) retorna o tamanho
+   da string recebida como parâmetro, que no caso seria o tamanho das strings "ola" + "mundo" + 1. 
+    

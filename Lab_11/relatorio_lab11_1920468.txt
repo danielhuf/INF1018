@@ -1,0 +1,15 @@
+RELATÓRIO LABORATÓRIO 11 - Daniel Stulberg Huf (1920468)
+
+1) Traduzindo a função novonum para assembly, depois de ter criado em .data as strings a serem usadas na função,
+criei o RA e abri espaço nele. Depois, movi a string 1 para o primeiro parametro da função printf, que é chamada.
+Em seguida, passei os parâmetros a serem utilizados na função scanf: a string 2 foi o primeiro parâmetro e o endereço
+da variável local foi o segundo parâmetro. Depois que scanf foi chamada, passei o conteúdo de de -4(%rbp), que agora
+é o inteiro i, para o registrador eax de retrono. Por fim, finalizei a função. Sua execução funcionou como o esperado.
+
+2) Traduzindo a função bemboba para assembly, construí o RA e abri nele espaço suficiente para um vetor de 4 inteiros.
+Iniciei a função inicializando r10d em 0 (i=0) e passei o endereço da variável local para o r11. No início do for, 
+comparo i a 4, caso for maior igual, pulo para FORA_FOR, onde passo o endereço da variável local para o primeiro 
+parametro a ser utilizado na função addl, e passo 4 para o segundo parametro, chamando a função em seguida e finalizando
+a função original. Caso contrário, passo o primeiro parametro da função original (num) para o conteúdo de a, somo
++4 à variavel a (para passar para o próximo elemento do vetor de inteiros), incremento em 1 o i e pulo de volta para
+o início do for, iterando novamente (ou não). A execução funcionou como o esperado, printando 20 na tela. 

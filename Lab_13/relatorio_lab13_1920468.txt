@@ -1,0 +1,27 @@
+RELATÓRIO LABORATÓRIO 13 - Daniel Stulberg Huf (1920468)
+
+1) A tradução da função é imediata, e as linhas do código estão comentadas.
+
+2) Fazendo o "desassembly" da função através do objdump, consigo visualizar os códigos de máquina de cada instrução
+da função. 
+
+3) De fato, ao compilar e tentar executar a main sem a opção -Wa, --execstack, o programa dá segmentation fault.
+Mas com essa opção, o programa é executado corretamente e a main retorna o valor esperado.
+
+4) -
+
+5) Para preencer os bytes da instrução call, preciso descobrir qual deve ser o valor x que deve ser preenchido.
+Para isso, devo notar que a soma desse valor com o endereço da próxima instrução resultará no endereço de add.
+Também sei que o endereço da próxima instrução é o endereço de código somado de 9 posições no array (isso
+foi visualizado através de objdump). Logo, a equação que preciso será: x = add - (codigo+9). Obtendo o valor de
+x, bastou substitui-lo nas posições corretas no array código, levando em consideração a ordenação little endian.
+
+Por algum motivo que ainda não consegui entender, o programa compila a main corretamente, mas dá segmentation
+fault em sua execução. Tal erro aparece partir da linha que inicializa o inteiro i, mas eu achei isso estranho,
+porque já tinha inicializado o inteiro i na questão 3 e havia funcionado. 
+
+6) Substituí a instrução call por jmp no arquivo assembly, e de fato ao analisar o código de máquina através de
+objdump, vejo que a instrução para jmp é e9, seguida de 4 bytes zero. Mantive a mesma operação que a da questão 
+anterior para preencher devidamente as posições do array codigo. 
+
+Mais uma vez, o programa compila corretamente, mas dá erro de segmentation fault em sua execução.  

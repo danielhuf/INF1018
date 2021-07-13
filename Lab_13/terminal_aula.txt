@@ -1,0 +1,41 @@
+daniel@Flavionote:/mnt/d/usuario/Daniel/Documentos/PUC/2021.1/Software_Basico/Lab_13$ gcc -c foo.s
+daniel@Flavionote:/mnt/d/usuario/Daniel/Documentos/PUC/2021.1/Software_Basico/Lab_13$ objdump -d foo.o
+
+foo.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <foo>:
+   0:   55                      push   %rbp
+   1:   48 89 e5                mov    %rsp,%rbp
+
+0000000000000004 <INICIO>:
+   4:   ff c7                   inc    %edi
+   6:   89 f8                   mov    %edi,%eax
+
+0000000000000008 <FIM>:
+   8:   c9                      leaveq
+   9:   c3                      retq
+
+xdaniel@Flavionote:/mnt/d/usuario/Daniel/Documentos/PUC/2021.1/Software_Basico/Lab_13$ gcc -Wall -o main main.c
+daniel@Flavionote:/mnt/d/usuario/Daniel/Documentos/PUC/2021.1/Software_Basico/Lab_13$ ./main
+Segmentation fault
+daniel@Flavionote:/mnt/d/usuario/Daniel/Documentos/PUC/2021.1/Software_Basico/Lab_13$ gcc -Wall -Wa,--execstack -o main main.c
+daniel@Flavionote:/mnt/d/usuario/Daniel/Documentos/PUC/2021.1/Software_Basico/Lab_13$ ./main
+O valor de i é 11
+daniel@Flavionote:/mnt/d/usuario/Daniel/Documentos/PUC/2021.1/Software_Basico/Lab_13$ gcc -o foo2.o foo2.s -c
+daniel@Flavionote:/mnt/d/usuario/Daniel/Documentos/PUC/2021.1/Software_Basico/Lab_13$ objdump -d foo2.o
+
+foo2.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <foo2>:
+   0:   55                      push   %rbp
+   1:   48 89 e5                mov    %rsp,%rbp
+   4:   e8 00 00 00 00          callq  9 <foo2+0x9>
+   9:   c9                      leaveq
+   a:   c3                      retq
+daniel@Flavionote:/mnt/d/usuario/Daniel/Documentos/PUC/2021.1/Software_Basico/Lab_13$

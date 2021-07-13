@@ -1,0 +1,18 @@
+RELATÓRIO LABORATÓRIO 15 - Daniel Stulberg Huf (1920468)
+
+1) Traduzi a função foo para assembly e todas as linhas do códigos estão comentadas. Ao executar a main, o valor retornado
+pela função foi o esperado. Tirando o protótipo de foo da main, e executando o programa mesmo assim, o valor retornado
+foi um float de 0. Talvez isso aconteça porque como a foo não foi definida, o programa talvez gere um valor retorno 
+default de 0. 
+
+2) Traduzi a função foo1 para assembly e todas as linhas do códigos estão comentadas. Ao executar a main, o valor retornado
+pela função foi o esperado. Tive que guardar o valor de b na pilha de execução, porque aparentemente ele também é alterado
+com a chamada da função sin.
+
+3) Traduzi a função foo1 para assembly e todas as linhas do códigos estão comentadas. Ao executar a main, o valor retornado
+pela função foi o esperado. Dessa vez, tive que guardar ambos os valores de a e b na pilha de execução, pois eles poderiam
+ser alterados ao chamar as funções sin e cos. 
+
+4) Traduzi a função foo1 para assembly e todas as linhas do códigos estão comentadas. Acho válido ressaltar
+que para atribuir à variável local r o valor 0.0, primeiro tive que atribuir a um registrador quad o valor 0
+e depois fazer a conversão de long para double, passando o valor 0 para um registrador próprio para double. 

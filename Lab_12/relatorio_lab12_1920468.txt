@@ -1,0 +1,15 @@
+RELATÓRIO LABORATÓRIO 12 - Daniel Stulberg Huf (1920468)
+
+1) No arquivo stringinvasora criado por mim, preenchi os 32 primeiros bytes da main com 0 e sobrescrevi o rbp de 8 bytes
+da main com valores arbitrários. De fato, a mensagem exibida no terminal se refere à função danger. Porém, depois também
+é exibida a mensagem referente à função illegalhandler, em vez de gerar uma segmentation fault. 
+
+2) No novo arquivo stringinvasora2, estendedno a sequência de bytes de modo a preencher a pilha com o endereço da função
+smoke, agora a mensagem exibida no terminal se refere à função danger, seguida da mensagemm referente à função smoke.
+Como a função smoke chama exit(0), de fato o programa termina elegantemente. 
+
+3) No novo arquivo stringinvasora2, preencho os primeiros bits do array buf com as instruções do código malicioso,
+obtido através da execução de objdump codigo.o. Após preencher os 32 bits e sobrescrever o rbp da main, sobrescrevi
+o endereço de retorno de getbuf pelo endereço de buf, obtido via a própria função getbuf, que printa o endereço desejado.
+Por fim, coloquei na última linha o endereço da função fizz, para que ela possa ser invocada após o ret do 
+código inserido na pilha. 

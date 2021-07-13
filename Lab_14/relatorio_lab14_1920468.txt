@@ -1,0 +1,19 @@
+RELATÓRIO LABORATÓRIO 14 - Daniel Stulberg Huf (1920468)
+
+1) Para criar a função que multiplica um float por 2, primeiro inicializei o campo float da union criada com o float
+recebido como parâmetro da função. Em seguida, com auxílio das macros getsig, getexp e getfrac, obtive, respectivamente,
+o sinal, expoente e fração da rerpesentação manipulável do float. Depois eu incrementei em 1 o valor do expoente, já que
+um valor na forma x * 2^y multiplicado por 2 equivale a x * 2^(y+1). Para finalizar, criei um novo float através da macro
+makefloat com o novo expoente, passando o resultado para a representaço manipulável do float, e depois retornei o float
+correspondente a essa manipulação. 
+
+2) Para criar a função int2float, primeiro tratei o caso especial do zero, retornando 0.0. Em seguida, tratei o sinal
+através de um condicional simples (se o número é negativo ou positivo). Depois, calculei o E da representação do float
+através de uma função auxiliar que retorna o maior expoente da representação do número inteiro como uma soma de 
+potências de base 2. Calculei o exp somando E ao valor de bias (127). Para tratar do frac, peguei o valor absoluto do número
+e subtraí dele 2*E, o que em binário equivaleria a retirar o bit 1 mais signifcativo. Caso o valor de E seja menor ou igual
+a 23, eu devo completar 0´s a direita de frac 23-E vezes, obtendo uma representação com uma precisão exata. Caso E seja
+maior do que 23, a representação do float não será capaz de representar com precisão exata o inteiro passado como parâmetro,
+e assim eu manipulei o valor de frac para apenas capturar os 23 bits mais significativos, a fim de atingir a maior precisão
+possível. Por fim, passei os parâmetros do sinal, exp e frac para a função makefloat, e guardei seu resultado no campo
+de unsigned int da union, retornando no fim o campo de float da union (com a mesma representação em bits). 
