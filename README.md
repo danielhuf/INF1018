@@ -1,4 +1,4 @@
-# INF1018
+# INF1018 - Software Básico
 Disciplina cursada em 2021.1.
 
 Nota final obtida: 8.5
